@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "PlayerCharacter.generated.h"
 
+class AWeapon;
+
 UCLASS()
 class RUNNINGOUTOFSPACE_API APlayerCharacter : public ACharacter
 {
