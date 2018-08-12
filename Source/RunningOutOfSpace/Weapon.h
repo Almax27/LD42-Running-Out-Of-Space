@@ -24,6 +24,9 @@ public:
     virtual void SetOwner(AActor* NewOwner) override;
 
     UFUNCTION(BlueprintCallable, Category = Weapon)
+    virtual void UpdateAttachment();
+
+    UFUNCTION(BlueprintCallable, Category = Weapon)
     virtual void StartUse();
 
     UFUNCTION(BlueprintCallable, Category = Weapon)

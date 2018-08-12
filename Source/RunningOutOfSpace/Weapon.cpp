@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Weapon.h"
-
+#include "GameFramework/Character.h"
+#include "Components/SkeletalMeshComponent.h"
 
 // Sets default values
 AWeapon::AWeapon()
@@ -16,10 +17,10 @@ void AWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 
-    //Ensure we're attached, as SetOwner can be called before we have a root component
-    if(AActor* CurrentOwner = GetOwner())
+    if(AActor* NewOwner = GetOwner())
     {
-        AttachToActor(CurrentOwner, FAttachmentTransformRules::SnapToTargetNotIncludingScale, DefaultAttachSocket);
+        UpdateAttachment();
+        OnOwnerChanged();
     }
 }
 
@@ -34,17 +35,29 @@ void AWeapon::SetOwner(AActor* NewOwner)
 {
     AActor* CurrentOwner = GetOwner();
     Super::SetOwner(NewOwner);
-    if(CurrentOwner != NewOwner)
+    if(HasActorBegunPlay() &&  CurrentOwner != NewOwner)
     {
         if(NewOwner)
         {
-            AttachToActor(NewOwner, FAttachmentTransformRules::SnapToTargetNotIncludingScale, DefaultAttachSocket);
+            UpdateAttachment();
         }
         else
         {
-            DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+            DetachRootComponentFromParent();
         }
         OnOwnerChanged();
+    }
+}
+
+void AWeapon::UpdateAttachment()
+{
+    if(ACharacter* OwningCharacter = Cast<ACharacter>(GetOwner()))
+    {
+        AttachToComponent(OwningCharacter->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, DefaultAttachSocket);
+    }
+    else
+    {
+        AttachToActor(GetOwner(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, DefaultAttachSocket);
     }
 }
 
