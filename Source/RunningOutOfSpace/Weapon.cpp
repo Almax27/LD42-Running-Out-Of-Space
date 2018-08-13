@@ -65,11 +65,18 @@ void AWeapon::UpdateAttachment()
 void AWeapon::StartUse()
 {
     OnStartUse();
+    m_isInUse = true;
 }
 
 void AWeapon::EndUse()
 {
     OnEndUse();
+    m_isInUse = false;
+}
+
+bool AWeapon::IsInUse() const
+{
+    return m_isInUse;
 }
 
     

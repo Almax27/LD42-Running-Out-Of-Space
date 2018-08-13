@@ -32,6 +32,9 @@ public:
     UFUNCTION(BlueprintCallable, Category = Weapon)
     virtual void EndUse();
 
+    UFUNCTION(BlueprintPure, Category = Weapon)
+    bool IsInUse() const;
+
 protected:
 
     UFUNCTION(BlueprintImplementableEvent, Category = Weapon)
@@ -49,5 +52,7 @@ public:
     FName DefaultAttachSocket;
 	
 protected:
+
+    bool m_isInUse = false;
 
 };
