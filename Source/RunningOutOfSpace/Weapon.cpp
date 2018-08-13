@@ -51,7 +51,8 @@ void AWeapon::SetOwner(AActor* NewOwner)
 
 void AWeapon::UpdateAttachment()
 {
-    if(ACharacter* OwningCharacter = Cast<ACharacter>(GetOwner()))
+    ACharacter* OwningCharacter = Cast<ACharacter>(GetOwner());
+    if(OwningCharacter && !DefaultAttachSocket.IsValid())
     {
         AttachToComponent(OwningCharacter->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, DefaultAttachSocket);
     }
