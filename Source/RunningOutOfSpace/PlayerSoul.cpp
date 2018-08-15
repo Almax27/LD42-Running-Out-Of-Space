@@ -133,7 +133,7 @@ bool APlayerSoul::UseThrow()
     {
         //consume energy
         CurrentEnergy = ThrowEnergy;
-        SetState(EPlayerSoulState::Returning);
+        SetState(EPlayerSoulState::Following);
         return true;
     }
     return false;
